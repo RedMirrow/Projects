@@ -94,7 +94,6 @@ public class PongFX extends Application{
 		else {
 			gc.setStroke(Color.WHITE);
 			gc.setTextAlign(TextAlignment.CENTER);
-			gc.strokeText("START GAME \n PRESS SPACE FOR PLAYER 2 CONTROL", width/2, height/2);
 			
 			//reset the position of the ball
 			ballXpos = width/2;
