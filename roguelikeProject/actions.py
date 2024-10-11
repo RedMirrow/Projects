@@ -1,6 +1,7 @@
 #Declaring new classes to import into the main.py when needed
 from __future__ import annotations
 from typing import Optional, Tuple, TYPE_CHECKING
+import colour
 if TYPE_CHECKING:
     from engine import Engine
     from entity import Actor, Entity
@@ -11,7 +12,7 @@ class Action:
 
     @property
     def engine(self) -> Engine:
-        """Return the engine this action belongs to."""
+        # Return the engine this action belongs to.
         return self.entity.gamemap.engine
 
     def perform(self) -> None:
@@ -38,17 +39,17 @@ class ActionWithDirection(Action):
 
     @property
     def dest_xy(self) -> Tuple[int, int]:
-        """Returns this actions destination."""
+        # Returns this actions destination.
         return self.entity.x + self.dx, self.entity.y + self.dy
 
     @property
     def blocking_entity(self) -> Optional[Entity]:
-        """Return the blocking entity at this actions destination.."""
+        # Return the blocking entity at this actions destination.
         return self.engine.game_map.get_blocking_entity_at_location(*self.dest_xy)
 
     @property
     def target_actor(self) -> Optional[Actor]:
-        """Return the actor at this actions destination."""
+        # Return the actor at this actions destination.
         return self.engine.game_map.get_actor_at_location(*self.dest_xy)
 
     def perform(self) -> None:
@@ -64,11 +65,19 @@ class MeleeAction(ActionWithDirection):
         damage = self.entity.fighter.power - target.fighter.defense
 
         attack_desc = f"{self.entity.name.capitalize()} attacks {target.name}"
+        if self.entity is self.engine.player:
+            attack_colour = colour.player_atk
+        else:
+            attack_colour = colour.enemy_atk
         if damage > 0:
-            print(f"{attack_desc} for {damage} hit points.")
+            self.engine.message_log.add_message(
+                f"{attack_desc} for {damage} hit points.", attack_colour
+            )
             target.fighter.hp -= damage
         else:
-            print(f"{attack_desc} but does no damage.")
+            self.engine.message_log.add_message(
+                f"{attack_desc} but does no damage.", attack_colour
+            )
 
 class MovementAction(ActionWithDirection):
 

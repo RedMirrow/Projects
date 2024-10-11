@@ -30,7 +30,7 @@ def new_tile(
     # graphics for when not in field of view
     light: Tuple[int, Tuple[int, int, int], Tuple[int, int, int]],
 ) -> np.ndarray:
-    """Helper function for defining individual tile types """
+    # Helper function for defining individual tile types
     return np.array((walkable, transparent, dark, light), dtype=tile_dt)
 
 # SHROUD represents unexplored, unseen tiles

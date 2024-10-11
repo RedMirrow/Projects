@@ -29,12 +29,12 @@ class RectangularRoom:
 
     @property
     def inner(self) -> Tuple[slice, slice]:
-        """Return the inner area of this room as a 2D array index."""
+        # Return the inner area of this room as a 2D array index.
         return slice(self.x1 + 1, self.x2), slice(self.y1 + 1, self.y2)
 
     # Checks whether 2 rooms intersect
     def intersects(self, other: RectangularRoom) -> bool:
-        """Return True if this room overlaps with another RectangularRoom."""
+        # Return True if this room overlaps with another RectangularRoom.
         return (
                 self.x1 <= other.x2
                 and self.x2 >= other.x1
@@ -60,7 +60,7 @@ def place_entities(
 def tunnel_between(
     start: Tuple[int, int], end: Tuple[int, int]
 ) -> Iterator[Tuple[int, int]]:
-    """Return an L-shaped tunnel between these two points."""
+    # Return an L-shaped tunnel between these two points.
     x1, y1 = start
     x2, y2 = end
     if random.random() < 0.5:  # 50% chance.
@@ -85,7 +85,7 @@ def generate_dungeon(
     max_monsters_per_room: int,
     engine: Engine,
 ) -> GameMap:
-    """Generate a new dungeon map."""
+    # Generate a new dungeon map.
     player = engine.player
     dungeon = GameMap(engine, map_width, map_height, entities=[player])
 
