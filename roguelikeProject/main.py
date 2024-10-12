@@ -8,6 +8,8 @@ import entity_factories
 from input_handlers import EventHandler
 from procgen import generate_dungeon
 
+import traceback
+
 def main() -> None:
     # Determines the size of the playscreen and used tileset
     screen_width = 80
@@ -18,6 +20,7 @@ def main() -> None:
     room_min_size = 6
     max_rooms = 30
     max_monsters_per_room = 2
+    max_items_per_room = 2
     tileset = tcod.tileset.load_tilesheet("tileMap.png",32,8,tcod.tileset.CHARMAP_TCOD)
 
     # A new event handler object is created to handle user inputs
@@ -32,6 +35,7 @@ def main() -> None:
         map_width=map_width,
         map_height=map_height,
         max_monsters_per_room=max_monsters_per_room,
+        max_items_per_room=max_items_per_room,
         engine=engine,
     )
     engine.update_fov()
@@ -55,7 +59,15 @@ def main() -> None:
         while True:
             engine.event_handler.on_render(console=root_console)
             context.present(root_console)
-            engine.event_handler.handle_events(context)
+            # Checks if there is an exception
+            try:
+                for event in tcod.event.wait():
+                    context.convert_event(event)
+                    engine.event_handler.handle_events(event)
+            except Exception:  # Handle exceptions in game.
+                traceback.print_exc()  # Print error to stderr.
+                # Then print the error to the message log.
+                engine.message_log.add_message(traceback.format_exc(), colour.error)
 
 
 if __name__ == "__main__":
