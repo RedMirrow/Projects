@@ -1,19 +1,24 @@
 from __future__ import annotations
+
+import copy
+
 from components.base_component import BaseComponent
 
 
 from typing import TYPE_CHECKING
 from render_order import RenderOrder
+from effect import StatusEffect
 import colour
 if TYPE_CHECKING:
     from entity import Actor
 class Fighter(BaseComponent):
     parent: Actor
-    def __init__(self, hp: int, defense: int, power: int):
+    def __init__(self, hp: int, base_defense: int, base_power: int):
+        self.status_effects = []
         self.max_hp = hp
         self._hp = hp
-        self.defense = defense
-        self.power = power
+        self.base_defense = base_defense
+        self.base_power = base_power
 
     # Accessor for entity's hp
     @property
@@ -39,11 +44,59 @@ class Fighter(BaseComponent):
     def take_damage(self, amount: int) -> None:
         self.hp -= amount
 
+    def apply_status_effect(self, effect: StatusEffect) -> None:
+
+        for status_effect in self.status_effects:
+            if status_effect.name == effect.name:
+                status_effect.duration += effect.duration
+                return
+        self.status_effects.append(copy.deepcopy(effect))
+
+        self.engine.message_log.add_message(f"{self.parent.name} is now {effect.name}!", colour.status_effect_applied)
+
+    def update_status_effects(self) -> None:
+        for status_effect in self.status_effects:
+            status_effect.on_tick(self.parent, self.engine)
+            if status_effect.duration <= 0 and status_effect in self.status_effects:
+                self.status_effects.remove(status_effect)
+                self.engine.message_log.add_message(f"{self.parent.name} is no longer {status_effect.name}.")
+
+    def has_status_effect(self, effect: StatusEffect) -> bool:
+        for status_effect in self.status_effects:
+            if status_effect.name == effect.name:
+                return True
+        return False
+
+    def take_damage(self, amount: int) -> None:
+        self.hp -= amount
+
     @hp.setter
     def hp(self, value: int) -> None:
         self._hp = max(0, min(value, self.max_hp))
         if self._hp == 0 and self.parent.ai:
             self.die()
+
+    @property
+    def defense(self) -> int:
+        return self.base_defense + self.defense_bonus
+
+    @property
+    def power(self) -> int:
+        return self.base_power + self.power_bonus
+
+    @property
+    def defense_bonus(self) -> int:
+        if self.parent.equipment:
+            return self.parent.equipment.defense_bonus
+        else:
+            return 0
+
+    @property
+    def power_bonus(self) -> int:
+        if self.parent.equipment:
+            return self.parent.equipment.power_bonus
+        else:
+            return 0
 
     # Death function for both player and npc
     def die(self) -> None:

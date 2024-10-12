@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Optional, Tuple, TYPE_CHECKING
 import colour
 import exceptions
+import random
 if TYPE_CHECKING:
     from engine import Engine
     from entity import Actor, Entity, Item
@@ -68,16 +69,33 @@ class ItemAction(Action):
 
     def perform(self) -> None:
         #Invoke the items ability, this action will be given to provide context.
-        self.item.consumable.activate(self)
+        if self.item.consumable:
+            self.item.consumable.activate(self)
 
 # Drop an item
 class DropItem(ItemAction):
     def perform(self) -> None:
+        if self.entity.equipment.item_is_equipped(self.item):
+            self.entity.equipment.toggle_equip(self.item)
         self.entity.inventory.drop(self.item)
 # Wait a turn
 class WaitAction(Action):
     def perform(self) -> None:
+        heal_chance = random.random()
+        if heal_chance > 0.85:
+            self.entity.fighter.hp += 1
         pass
+
+# Equips an item
+class EquipAction(Action):
+    def __init__(self, entity: Actor, item: Item):
+        super().__init__(entity)
+
+        self.item = item
+
+    def perform(self) -> None:
+        self.entity.equipment.toggle_equip(self.item)
+
 
 # Take the stairs if present
 class TakeStairsAction(Action):
@@ -140,7 +158,6 @@ class MeleeAction(ActionWithDirection):
             self.engine.message_log.add_message(
                 f"{attack_desc} but does no damage.", attack_colour
             )
-
 class MovementAction(ActionWithDirection):
 
     def perform(self) -> None:
@@ -155,6 +172,9 @@ class MovementAction(ActionWithDirection):
             # Destination is blocked by an entity.
             raise exceptions.Impossible("That way is blocked.")
         self.entity.move(self.dx, self.dy)
+        heal_chance = random.random()
+        if heal_chance > 0.95:
+            self.entity.fighter.hp += 1
 
 # When the player bumps into an entity do this
 class BumpAction(ActionWithDirection):

@@ -21,24 +21,25 @@ max_items_by_floor = [
 ]
 
 max_monsters_by_floor = [
-    (1, 2),
-    (4, 3),
-    (6, 5),
+    (1, 3),
+    (4, 4),
+    (6, 6),
 ]
 
 item_chances: Dict[int, List[Tuple[Entity, int]]] = {
     0: [(entity_factories.health_potion, 40)],
     1: [(entity_factories.weaken_scroll, 20)],
     2: [(entity_factories.confusion_scroll, 10)],
-    3: [(entity_factories.strength_scroll, 5)],
-    4: [(entity_factories.lightning_scroll, 25)],
-    6: [(entity_factories.fireball_scroll, 25)],
+    3: [(entity_factories.strength_scroll, 5),(entity_factories.greater_health_potion, 15)],
+    4: [(entity_factories.lightning_scroll, 25), (entity_factories.sword, 5)],
+    6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 15)],
 }
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0: [(entity_factories.orc, 80)],
-    3: [(entity_factories.troll, 15)],
-    5: [(entity_factories.troll, 30)],
-    7: [(entity_factories.troll, 60)],
+    0: [(entity_factories.bat, 80),(entity_factories.skeleton, 20)],
+    1: [(entity_factories.bat, 40),(entity_factories.skeleton, 60), (entity_factories.mama_slime, 10)],
+    3: [(entity_factories.orc, 15),(entity_factories.bile_spew, 25),(entity_factories.skeleton, 80),(entity_factories.bat, 5), (entity_factories.mama_slime, 20)],
+    5: [(entity_factories.orc, 30),(entity_factories.troll, 5),(entity_factories.skeleton, 60),(entity_factories.bat, 0)],
+    7: [(entity_factories.orc, 60),(entity_factories.troll, 15),(entity_factories.skeleton, 20)],
 }
 
 # Get the limit values

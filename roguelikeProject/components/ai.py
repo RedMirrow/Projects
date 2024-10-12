@@ -6,6 +6,7 @@ import numpy as np  # type: ignore
 import tcod
 
 from actions import Action, BumpAction, MeleeAction, MovementAction, WaitAction
+from components import hazard
 
 if TYPE_CHECKING:
     from entity import Actor
@@ -105,3 +106,152 @@ class HostileEnemy(BaseAI):
             ).perform()
 
         return WaitAction(self.entity).perform()
+
+
+class SpawnerEnemy(BaseAI):
+
+    #A spawner enemy will spawn a new enemy (of the selected type)
+    # in a random location around itself.
+    # While trying to get distanced from the player.
+    def __init__(
+            self, entity: Actor,
+    ):
+        super().__init__(entity)
+
+        self.path = None
+        self.spawn_timer = None
+        self.spawn_rate = None
+        self.spawned_entity = None
+        self.is_setup = False
+        self.flee_position = None # By default has no fleeing position
+
+    def setup(self, spawned_entity: Actor, spawn_rate: int):
+        self.spawned_entity = spawned_entity
+        self.spawn_rate = spawn_rate
+        self.spawn_timer = 0
+        self.is_setup = True
+
+    def perform(self) -> None:
+        # Do not perform if this AI is not setup or the spawner is not visible.
+        if not self.is_setup or not self.engine.game_map.visible[self.entity.x, self.entity.y]:
+            return WaitAction(self.entity).perform()
+
+        # If we are on the flee position, set it to none
+        if self.flee_position and self.entity.x == self.flee_position[0] and self.entity.y == self.flee_position[1]:
+            self.flee_position = None
+
+        # If the spawn timer is greater than the spawn rate, spawn a new enemy.
+        if self.spawn_timer >= self.spawn_rate:
+            # Reset the spawn timer.
+            self.spawn_timer = 0
+
+            # Get a random location near the spawner.
+            x = self.entity.x + random.randint(-3, 3)
+            y = self.entity.y + random.randint(-3, 3)
+
+            tries = 0
+            while not self.engine.game_map.in_bounds(x, y) or not self.engine.game_map.get_blocking_entity_at_location(
+                    x, y):
+                # Determines a random place for the child to spawn in
+                x = self.entity.x + random.randint(-3, 3)
+                y = self.entity.y + random.randint(-3, 3)
+                tries += 1
+                if tries > 10:
+                    return WaitAction(
+                        self.entity).perform()  # If the spawner is not able to find a valid location, it will wait.
+
+            # Spawn the new enemy.
+            self.spawned_entity.spawn(self.engine.game_map, x, y,
+                                      True)  # Make sure to set the spawned entity to be a swarm entity.
+
+            # Add a message to the message log.
+            self.engine.message_log.add_message(
+                f"The {self.entity.name} spawned a new {self.spawned_entity.name}!"
+            )
+
+        # Get the distance between the player and the spawner.
+        distance = self.entity.distance(self.engine.player.x, self.engine.player.y)
+
+        # If the distance is less than 5, move away from the player.
+        if distance < 5:
+            if not self.flee_position:
+                # Get a flee position, that is around 20 tiles away.
+                self.flee_position = (
+                    self.entity.x + random.randint(-20, 20),
+                    self.entity.y + random.randint(-20, 20),
+                )
+
+                while not self.engine.game_map.in_bounds(
+                        *self.flee_position) or self.engine.game_map.get_blocking_entity_at_location(
+                        *self.flee_position) or self.engine.game_map.tiles["walkable"][
+                    self.flee_position[0], self.flee_position[1]] == False:
+                    self.flee_position = (
+                        self.entity.x + random.randint(-20, 20),
+                        self.entity.y + random.randint(-20, 20),
+                    )
+
+            # Get the direction to the flee position.
+            self.path = self.get_path_to(self.flee_position[0], self.flee_position[1])
+
+            if self.path:
+                dest_x, dest_y = self.path.pop(0)
+                return MovementAction(
+                    self.entity, dest_x - self.entity.x, dest_y - self.entity.y,
+                ).perform()
+
+        # Add 1 to the spawn timer.
+        self.spawn_timer += 1
+
+        # Return a wait action.
+        return WaitAction(self.entity).perform()
+
+# A hazard spawner enemy will spawn a new enemy (of the selected type) in a random location around it self. It can't move on it's own.
+class HazardSpawnerEnemy(BaseAI):
+    def __init__(
+            self, entity: Actor
+    ):
+        super().__init__(entity)
+
+        self.spawn_timer = None
+        self.spawn_rate = None
+        self.spawned_hazard = None
+        self.is_setup = False
+
+
+    def setup(self, spawned_entity: hazard, spawn_rate: int):
+        self.spawned_hazard = spawned_entity
+        self.spawn_rate = spawn_rate
+        self.spawn_timer = 0
+        self.is_setup = True
+
+
+    def perform(self) -> None:
+        # Do not perform if this AI is not setup or the spawner is not visible.
+        if not self.is_setup or not self.engine.game_map.visible[self.entity.x, self.entity.y]:
+            return WaitAction(self.entity).perform()
+
+        # If the spawn timer is greater than the spawn rate, spawn a new hazard in the 8 tiles around this.
+        if self.spawn_timer >= self.spawn_rate:
+            # Reset the spawn timer.
+            self.spawn_timer = 0
+
+            for x in range(self.entity.x - 1, self.entity.x + 2):
+                for y in range(self.entity.y - 1, self.entity.y + 2):
+                    if self.entity.x == x and self.entity.y == y:
+                        continue
+                    if self.engine.game_map.in_bounds(x, y) and self.engine.game_map.get_blocking_entity_at_location(x,y) == None and self.engine.game_map.is_walkable_tile(x, y):
+                        gas = self.spawned_hazard.spawn(self.engine.game_map, x, y)
+                        gas.duration += random.randint(1, 6)
+
+            # Add a message to the message log.
+            self.engine.message_log.add_message(
+                f"The {self.entity.name} released a bunch of {self.spawned_hazard.name}!"
+            )
+
+        # Add 1 to the spawn timer.
+        self.spawn_timer += 1
+
+        # Return a wait action.
+        return WaitAction(self.entity).perform()
+
+

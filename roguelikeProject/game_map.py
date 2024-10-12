@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Iterable, Iterator, Optional, TYPE_CHECKING
 import numpy as np  # type: ignore
 from tcod.console import Console
-from entity import Actor, Item
+from entity import Actor, Item, Hazard
 import tile_types
 
 if TYPE_CHECKING:
@@ -13,6 +13,7 @@ class GameMap:
     def __init__(
         self, engine: Engine, width: int, height: int, entities: Iterable[Entity] = ()
     ):
+
         self.engine = engine
         self.width, self.height = width, height
         self.entities = set(entities)
@@ -26,6 +27,15 @@ class GameMap:
         )  # Tiles the player has seen before
         self.downstairs_location = (0, 0)
 
+
+    def is_walkable_tile(
+            self, location_x: int, location_y: int,
+    ) -> bool:
+        # Return if there is a walkable tile at the given location.
+        if self.in_bounds(location_x, location_y) and self.tiles[location_x, location_y]["walkable"]:
+            return self.tiles[location_x, location_y]["walkable"]
+        return False
+
     @property
     def gamemap(self) -> GameMap:
         return self
@@ -37,6 +47,15 @@ class GameMap:
             entity
             for entity in self.entities
             if isinstance(entity, Actor) and entity.is_alive
+        )
+
+    @property
+    def hazards(self) -> Iterator[Hazard]:
+        """Iterate over this maps hazards."""
+        yield from (
+            entity
+            for entity in self.entities
+            if isinstance(entity, Hazard)
         )
 
 
@@ -92,6 +111,7 @@ class GameMap:
                 console.print(
                     x=entity.x, y=entity.y, string=entity.char, fg=entity.color
                 )
+
 
 
 #Holds the settings for the GameMap, and generates new maps when moving down the stairs.

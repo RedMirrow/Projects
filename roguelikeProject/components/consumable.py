@@ -4,7 +4,6 @@
 
 from __future__ import annotations
 
-import random
 from typing import Optional, TYPE_CHECKING
 
 import actions
@@ -190,7 +189,7 @@ class WeakenConsumable(Consumable):
             f"{target.name}'s body begins to wither away slightly!",
             colour.status_effect_applied,
         )
-        target.fighter.power = target.fighter.power -1
+        target.fighter.base_power = target.fighter.base_power -1
         self.consume()
 
 # Strenghten scroll
@@ -220,5 +219,5 @@ class StrenghtenConsumable(Consumable):
             f"{target.name}'s muscles bulge with newfound power!",
             colour.green,
         )
-        target.fighter.power = target.fighter.power +1
+        target.fighter.base_power = target.fighter.base_power +1
         self.consume()
