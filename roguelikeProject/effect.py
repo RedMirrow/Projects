@@ -41,7 +41,6 @@ class Bleeding(StatusEffect):
     #A class to represent a bleeding status effect.
     #If the actor moved this turn, they will take damage based on the value of the status effect.
 
-
     def __init__(self, duration: int, value: int):
         super().__init__("Bleeding", duration, value)
         self.last_pos = (0, 0)

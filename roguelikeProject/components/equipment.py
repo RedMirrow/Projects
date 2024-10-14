@@ -7,14 +7,18 @@ from equipment_types import EquipmentType
 
 if TYPE_CHECKING:
     from entity import Actor, Item
+    from fighter import Fighter
 
 
 class Equipment(BaseComponent):
     parent: Actor
 
-    def __init__(self, weapon: Optional[Item] = None, armour: Optional[Item] = None):
+    def __init__(self, weapon: Optional[Item] = None, armour: Optional[Item] = None, ring: Optional[Item] = None, helmet: Optional[Item] = None, amulet: Optional[Item] = None):
         self.weapon = weapon # Holds the weapon used
         self.armour = armour # Holds the armour used
+        self.helmet = helmet  # Holds the armour used
+        self.ring = ring # Holds the ring used
+        self.amulet = amulet  # Holds the necklace used
 
     @property
     def defense_bonus(self) -> int:
@@ -26,7 +30,12 @@ class Equipment(BaseComponent):
 
         if self.armour is not None and self.armour.equippable is not None:
             bonus += self.armour.equippable.defense_bonus
-
+        if self.helmet is not None and self.helmet.equippable is not None:
+            bonus += self.helmet.equippable.defense_bonus
+        if self.amulet is not None and self.amulet.equippable is not None:
+            bonus += self.amulet.equippable.defense_bonus
+        if self.ring is not None and self.ring.equippable is not None:
+            bonus += self.ring.equippable.defense_bonus
         return bonus
 
     @property
@@ -39,6 +48,14 @@ class Equipment(BaseComponent):
 
         if self.armour is not None and self.armour.equippable is not None:
             bonus += self.armour.equippable.power_bonus
+
+        if self.helmet is not None and self.helmet.equippable is not None:
+            bonus += self.helmet.equippable.power_bonus
+        if self.amulet is not None and self.amulet.equippable is not None:
+            bonus += self.amulet.equippable.power_bonus
+        if self.ring is not None and self.ring.equippable is not None:
+            bonus += self.ring.equippable.power_bonus
+
 
         return bonus
 
@@ -65,6 +82,7 @@ class Equipment(BaseComponent):
         if current_item is not None:
             self.unequip_from_slot(slot, add_message)
 
+
         setattr(self, slot, item)
 
         if add_message:
@@ -85,8 +103,23 @@ class Equipment(BaseComponent):
             and equippable_item.equippable.equipment_type == EquipmentType.WEAPON
         ):
             slot = "weapon"
-        else:
+        elif (
+                equippable_item.equippable
+                and equippable_item.equippable.equipment_type == EquipmentType.ARMOUR
+        ):
             slot = "armour"
+        elif (
+                equippable_item.equippable
+                and equippable_item.equippable.equipment_type == EquipmentType.HELMET
+        ):
+            slot = "helmet"
+        elif (
+                equippable_item.equippable
+                and equippable_item.equippable.equipment_type == EquipmentType.AMULET
+        ):
+            slot = "amulet"
+        else:
+            slot = "ring"
 
         if getattr(self, slot) == equippable_item:
             self.unequip_from_slot(slot, add_message)

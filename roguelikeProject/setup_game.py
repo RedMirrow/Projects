@@ -7,6 +7,7 @@ from typing import Optional
 import tcod
 from tcod import libtcodpy
 import colour
+from components.equippable import cloths
 from engine import Engine
 import entity_factories
 import input_handlers
@@ -49,16 +50,16 @@ def new_game() -> Engine:
     )
     # Gives the player an armour and
     dagger = copy.deepcopy(entity_factories.dagger)
-    leather_armour = copy.deepcopy(entity_factories.leather_armour)
+    cloth = copy.deepcopy(entity_factories.cloth_armour)
 
     dagger.parent = player.inventory
-    leather_armour.parent = player.inventory
+    cloth.parent = player.inventory
 
     player.inventory.items.append(dagger)
     player.equipment.toggle_equip(dagger, add_message=False)
 
-    player.inventory.items.append(leather_armour)
-    player.equipment.toggle_equip(leather_armour, add_message=False)
+    player.inventory.items.append(cloth)
+    player.equipment.toggle_equip(cloth, add_message=False)
     return engine
 
 def load_game(filename: str) -> Engine:

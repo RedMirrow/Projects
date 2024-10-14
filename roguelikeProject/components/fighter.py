@@ -8,6 +8,7 @@ from components.base_component import BaseComponent
 from typing import TYPE_CHECKING
 from render_order import RenderOrder
 from effect import StatusEffect
+
 import colour
 if TYPE_CHECKING:
     from entity import Actor
@@ -15,10 +16,12 @@ class Fighter(BaseComponent):
     parent: Actor
     def __init__(self, hp: int, base_defense: int, base_power: int):
         self.status_effects = []
-        self.max_hp = hp
+        self.base_max_hp = hp
         self._hp = hp
+        self.max_hp = hp
         self.base_defense = base_defense
         self.base_power = base_power
+        self.status_effects = []
 
     # Accessor for entity's hp
     @property
@@ -35,10 +38,9 @@ class Fighter(BaseComponent):
         if new_hp_value > self.max_hp:
             new_hp_value = self.max_hp
 
+        # Calculates hp recovered for feedback
         amount_recovered = new_hp_value - self.hp
-
         self.hp = new_hp_value
-
         return amount_recovered
 
     def take_damage(self, amount: int) -> None:
@@ -97,6 +99,7 @@ class Fighter(BaseComponent):
             return self.parent.equipment.power_bonus
         else:
             return 0
+
 
     # Death function for both player and npc
     def die(self) -> None:

@@ -16,7 +16,7 @@ from entity import Actor, Item, Hazard
 poisonGas = Hazard(
     char="▒",
     color=(204, 204, 0),
-    name="Poison",
+    name="Poison Bile",
     duration=10,
     is_permanent=False,
     hazard_component=PoisonGas,
@@ -31,17 +31,17 @@ player = Actor(
     color=(255, 255, 255),
     name="Player",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=30, base_defense=1, base_power=2),
+    fighter=Fighter(hp=30, base_defense=0, base_power=2),
     equipment=Equipment(),
     inventory=Inventory(capacity=26),
     level=Level(level_up_base=200),
 )
 
 
-bat = Actor(
-    char="^",
+rat = Actor(
+    char="r",
     color=(222, 184, 135),
-    name="bat",
+    name="Rat",
     ai_cls=HostileEnemy,
     fighter=Fighter(hp=10, base_defense=0, base_power=2),
     equipment=Equipment(),
@@ -64,7 +64,7 @@ orc = Actor(
     color=(63, 127, 63),
     name="Orc",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=30, base_defense=3, base_power=6),
+    fighter=Fighter(hp=30, base_defense=2, base_power=6),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=30),
@@ -113,7 +113,7 @@ bile_spew = Actor(
     level=Level(xp_given=60),
     equipment=Equipment(),
 )
-bile_spew.ai.setup(poisonGas, 4)
+bile_spew.ai.setup(poisonGas, 2)
 
 #=====================================================================#
 #                        Consumables - Potion                         #
@@ -164,25 +164,119 @@ fireball_scroll = Item(
     char="~",
     color=(255, 0, 0),
     name="Fireball Scroll",
-    consumable=consumable.FireballDamageConsumable(damage=12, radius=3),
+    consumable=consumable.FireballDamageConsumable(damage=15, radius=3),
 )
 #=====================================================================#
 #                             Equipment                               #
 #=====================================================================#
-dagger = Item(
-    char="/", color=(0, 191, 255), name="Dagger", equippable=equippable.Dagger()
-)
 
-sword = Item(char="/", color=(0, 191, 255), name="Sword", equippable=equippable.Sword())
+#==============================WEAPONS================================#
+dagger = Item(
+    char="/", color=(180, 189, 186),
+    name="Dagger", equippable=equippable.Dagger())
+hatchet = Item(
+    char="/", color=(190, 199, 196),
+    name="Hatchet", equippable=equippable.Hatchet())
+sword = Item(
+    char="/", color=(202, 209, 206),
+    name="Sword", equippable=equippable.Sword())
+swordAndShield = Item(
+    char="}", color=(249, 169, 48),
+    name="Shortsword and Shield", equippable=equippable.ShortSwordAndShield())
+axe = Item(
+    char="/", color=(212, 219, 216),
+    name="Axe", equippable=equippable.Axe())
+greatsword = Item(
+    char="/", color=(232, 219, 216),
+    name="Greatsword", equippable=equippable.Greatsword())
+swordAndBigShield = Item(
+    char="}", color=(202, 209, 206),
+    name="Sword and Greatshield", equippable=equippable.SwordAndGreatShield())
+towershield = Item(
+    char="}", color=(232, 219, 216),
+    name="Towershield", equippable=equippable.GreaterShield())
+
+#==============================ARMOUR================================#
+cloth_armour = Item(
+    char="[", color=(255,255,255),
+    name="Clothing", equippable=equippable.cloths())
 
 leather_armour = Item(
-    char="[",
-    color=(139, 69, 19),
-    name="Leather Armour",
-    equippable=equippable.LeatherArmour(),
-)
+    char="[", color=(171, 88, 46),
+    name="Leather Armour", equippable=equippable.LeatherArmour())
 
 chain_mail = Item(
-    char="[", color=(139, 69, 19), name="Chain Mail", equippable=equippable.ChainMail()
-)
+    char="[", color=(128, 128, 128),
+    name="Chain Mail", equippable=equippable.ChainMail())
 
+strong_leather_armour = Item(
+    char="[", color=(227, 118, 64),
+    name="Strong Leather Armour", equippable=equippable.StrongLeatherArmour())
+
+strong_chain_mail = Item(
+    char="[", color=(171, 169, 169),
+    name="Chain Mail of Strength", equippable=equippable.StrongChainMail())
+
+#==============================HELMETS===============================#
+leather_cap = Item(
+    char="^", color=(171, 88, 46),
+    name="Leather Cap", equippable=equippable.LeatherCap())
+
+agileCap = Item(
+    char="^", color=(227, 118, 64),
+    name="Agility Cap", equippable=equippable.AgileCap())
+
+featherCap = Item(
+    char="^", color=(227, 118, 64),
+    name="Feather Cap", equippable=equippable.FeatherCap())
+
+chainCoif = Item(
+    char="^", color=(128, 128, 128),
+    name="Chain Coif", equippable=equippable.ChainCoif())
+
+knightHelm = Item(
+    char="^", color=(171, 169, 169),
+    name="Knight Helm", equippable=equippable.FullPlateHelmet())
+
+#===============================RINGS================================#
+strengthRing = Item(
+    char="c", color=(255, 151, 0),
+    name="Ring of Strength", equippable=equippable.StrengthRing())
+hardRing = Item(
+    char="c", color=(52, 192, 235),
+    name="Hardened Ring", equippable=equippable.HardenedRing())
+powerRing = Item(
+    char="c", color=(200, 50, 46),
+    name="Ring of Great Strength", equippable=equippable.PowerRing())
+shieldRing = Item(
+    char="c", color=(52, 156, 235),
+    name="Ring of Shields", equippable=equippable.ShieldingRing())
+recklessRing = Item(
+    char="c", color=(255, 23, 0),
+    name="Ring of Reckless Strength", equippable=equippable.RecklessRing())
+turtleRing = Item(
+    char="c", color=(52, 92, 235),
+    name="Ring of the Turtle", equippable=equippable.TurtleRing())
+
+#==============================AMULETS===============================#
+strengthAmulet = Item(
+    char="u", color=(255, 151, 0),
+    name="Amulet of Strength", equippable=equippable.StrengthAmulet())
+agileAmulet = Item(
+    char="u", color=(52, 192, 235),
+    name="Amulet of Agility", equippable=equippable.AgileAmulet())
+powerAmulet = Item(
+    char="u", color=(200, 50, 46),
+    name="Amulet of Greater Strength", equippable=equippable.PowerAmulet())
+steelAmulet = Item(
+    char="u", color=(52, 156, 235),
+    name="Amulet of Steelskin", equippable=equippable.SteelAmulet())
+berserkAmulet = Item(
+    char="u", color=(255, 23, 0),
+    name="Amulet of Berserk Strength", equippable=equippable.BerserkAmulet())
+knightsAmulet = Item(
+    char="u", color=(52, 92, 235),
+    name="Amulet of the Knight", equippable=equippable.KnightsAmulet())
+titansAmulet = Item(
+    char="u", color=(0, 255, 23),
+    name="Titan's Amulet", equippable=equippable.TitansAmulet())

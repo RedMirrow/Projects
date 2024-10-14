@@ -40,6 +40,31 @@ class Engine:
                 except exceptions.Impossible:
                     pass  # Ignore impossible action exceptions from AI.
 
+    def handle_status_effects(self) -> None:
+        for entity in set(self.game_map.actors):
+            entity.fighter.update_status_effects()
+
+    # Handling hazards
+    def handle_hazard(self) -> None:
+        hazard_to_remove = []
+        for hazard in self.game_map.hazards:
+            hazard.on_update()
+            # Check if there's an actor in the hazard.
+            for actor in self.game_map.actors:
+                if hazard.x == actor.x and hazard.y == actor.y:
+                    if actor.fighter and actor.fighter.hp > 0:
+                        hazard.on_tick_actor(actor)
+
+            # If the hazard is not permanent, then tick down its countdown.
+            if not hazard.is_permanent:
+                hazard.duration -= 1
+                if hazard.duration <= 0:
+                    hazard_to_remove.append(hazard)
+
+        # Remove the hazards that are done.
+        for hazard in hazard_to_remove:
+            self.game_map.entities.remove(hazard)
+
     def update_fov(self) -> None:
         # Recompute the visible area based on the players point of view.
         self.game_map.visible[:] = compute_fov(

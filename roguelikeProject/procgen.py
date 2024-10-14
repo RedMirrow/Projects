@@ -17,7 +17,9 @@ if TYPE_CHECKING:
 # Hard limits on items and monsters per room based on floor
 max_items_by_floor = [
     (1, 1),
-    (4, 2),
+    (3, 2),
+    (5, 3),
+    (7, 4),
 ]
 
 max_monsters_by_floor = [
@@ -25,20 +27,129 @@ max_monsters_by_floor = [
     (4, 4),
     (6, 6),
 ]
-
+# Item chance table
 item_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0: [(entity_factories.health_potion, 40)],
-    1: [(entity_factories.weaken_scroll, 20)],
-    2: [(entity_factories.confusion_scroll, 10)],
-    3: [(entity_factories.strength_scroll, 5),(entity_factories.greater_health_potion, 15)],
-    4: [(entity_factories.lightning_scroll, 25), (entity_factories.sword, 5)],
-    6: [(entity_factories.fireball_scroll, 25), (entity_factories.chain_mail, 15)],
+    0: [
+        # To represent fallen adventurers, potentially throw in starter gear
+        (entity_factories.dagger,5),
+        (entity_factories.cloth_armour,5),
+        # Actual loot of the floors
+        (entity_factories.health_potion, 60),
+
+    ],
+    1: [ # Upgrades available - weapon, armour,
+        (entity_factories.weaken_scroll, 20),
+        (entity_factories.hatchet,5),
+        (entity_factories.leather_armour,5),
+    ],
+    2: [ # Upgrades available - weapon, armour, helmet,
+        (entity_factories.confusion_scroll, 10),
+
+        (entity_factories.hatchet, 10),
+        (entity_factories.leather_armour, 10),
+        (entity_factories.leather_cap, 10),
+    ],
+    3: [ # Upgrades available - weapon, armour, helmet, Tier 1 ring
+
+        (entity_factories.strength_scroll, 5),
+        (entity_factories.greater_health_potion, 30),
+
+        (entity_factories.sword,5),
+        (entity_factories.axe,5),
+        (entity_factories.swordAndShield,5),
+
+        (entity_factories.hatchet, 15),
+        (entity_factories.leather_armour, 15),
+        (entity_factories.strong_leather_armour, 5),
+        (entity_factories.leather_cap, 10),
+        (entity_factories.featherCap, 5),
+        (entity_factories.agileCap, 5),
+
+        (entity_factories.strengthRing,5),
+        (entity_factories.hardRing,5),
+
+    ],
+    4: [ # Upgrades available - weapon, armour, helmet, Tier 1 ring,  Tier 1 necklace
+        # To show that many fell by the 3rd floor
+        (entity_factories.dagger,0),
+        (entity_factories.cloth_armour,0),
+        (entity_factories.hatchet, 2),
+        (entity_factories.leather_armour, 2),
+        (entity_factories.leather_cap, 2),
+        # Actual loot of the floor
+        (entity_factories.lightning_scroll, 25),
+        (entity_factories.sword,10),
+        (entity_factories.axe,10),
+        (entity_factories.swordAndShield,10),
+
+        (entity_factories.featherCap, 10),
+        (entity_factories.agileCap, 10),
+
+        (entity_factories.strengthAmulet,5),
+        (entity_factories.agileAmulet,5),
+    ],
+    5:[ # Upgrades available - weapon, armour, helmet, Tier 1, 2 ring, Tier 1 necklace
+        #Low tier loot filter
+        (entity_factories.hatchet, 0),
+        (entity_factories.leather_armour, 0),
+        (entity_factories.leather_cap, 0),
+        (entity_factories.strengthRing,2),
+        (entity_factories.hardRing,2),
+        (entity_factories.strengthAmulet,2),
+        (entity_factories.agileAmulet,2),
+
+        # Actual loot
+        (entity_factories.powerRing,5),
+        (entity_factories.shieldRing,5),
+        (entity_factories.powerAmulet,5),
+        (entity_factories.steelAmulet,5),
+        (entity_factories.swordAndBigShield,15),
+
+        (entity_factories.chain_mail,10),
+        (entity_factories.chainCoif,10),
+
+    ],
+
+    6: [ # Upgrades available - weapon, armour, helmet, Tier 2 ring, Tier 2 necklace
+        #Low tier loot filter
+        (entity_factories.hardRing,0),
+        (entity_factories.strengthAmulet,0),
+        (entity_factories.agileAmulet,0),
+        (entity_factories.health_potion, 0),
+
+        # Actual loot
+        (entity_factories.greater_health_potion, 95),
+        (entity_factories.fireball_scroll, 25),
+        (entity_factories.greatsword,5),
+        (entity_factories.towershield,5),
+    ],
+
+    7: [  # Upgrades available - weapon, armour, helmet, Tier 3 ring, Tier 3 necklace
+        # Low tier loot filter
+
+        (entity_factories.fireball_scroll, 30),
+        (entity_factories.greatsword,10),
+        (entity_factories.towershield, 10),
+        (entity_factories.knightHelm, 10),
+        (entity_factories.strong_chain_mail, 5),
+
+        (entity_factories.titansAmulet, 5),
+        (entity_factories.berserkAmulet, 5),
+        (entity_factories.knightsAmulet, 5),
+        (entity_factories.recklessRing, 5),
+        (entity_factories.turtleRing, 5),
+
+    ],
+
 }
+
+# Enemy chance
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0: [(entity_factories.bat, 80),(entity_factories.skeleton, 20)],
-    1: [(entity_factories.bat, 40),(entity_factories.skeleton, 60), (entity_factories.mama_slime, 10)],
-    3: [(entity_factories.orc, 15),(entity_factories.bile_spew, 25),(entity_factories.skeleton, 80),(entity_factories.bat, 5), (entity_factories.mama_slime, 20)],
-    5: [(entity_factories.orc, 30),(entity_factories.troll, 5),(entity_factories.skeleton, 60),(entity_factories.bat, 0)],
+    0: [(entity_factories.rat, 80),(entity_factories.skeleton, 40)],
+    1: [(entity_factories.mama_slime, 10)],
+    2: [(entity_factories.rat, 40),(entity_factories.skeleton, 60)],
+    3: [(entity_factories.orc, 15),(entity_factories.bile_spew, 25),(entity_factories.skeleton, 80),(entity_factories.rat, 5), (entity_factories.mama_slime, 20)],
+    5: [(entity_factories.orc, 30),(entity_factories.troll, 5),(entity_factories.skeleton, 60),(entity_factories.rat, 0)],
     7: [(entity_factories.orc, 60),(entity_factories.troll, 15),(entity_factories.skeleton, 20)],
 }
 

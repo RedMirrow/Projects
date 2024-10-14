@@ -5,7 +5,7 @@ import random
 
 from typing import Optional, Tuple, Type, TypeVar, TYPE_CHECKING, Union
 import math
-
+from effect import StatusEffect
 from components.hazard import HazardComponent
 from render_order import RenderOrder
 
@@ -43,6 +43,8 @@ class Entity:
         self.blocks_movement = blocks_movement
         self.render_order = render_order
         self.last_position = (x, y)
+        self.is_swarm = False
+        self.visible = True
         if parent:
             # If parent isn't provided now then it will be set later.
             self.parent = parent
@@ -62,7 +64,7 @@ class Entity:
         clone.parent = gamemap
         gamemap.entities.add(clone)
         return clone
-    def place(self, x: int, y: int, gamemap: Optional[GameMap] = None) -> None:
+    def place(self, x: int, y: int, gamemap: Optional[GameMap] = None, is_swarm: Optional[bool] = False) -> None:
         # Place this entity at a new location.  Handles moving across GameMaps.
         self.x = x
         self.y = y
@@ -71,7 +73,9 @@ class Entity:
                 if self.parent is self.gamemap:
                     self.gamemap.entities.remove(self)
             self.parent = gamemap
+            self.is_swarm = is_swarm  # If this is a swarm, then it will not give XP when it dies.
             gamemap.entities.add(self)
+            self.is_swarm = False
 
     def move(self, dx: int, dy: int) -> None:
         # Move the entity by a given amount
@@ -99,6 +103,7 @@ class Actor(Entity):
         equipment: Equipment,
         inventory: Inventory,
         level: Level,
+        effect: Optional[StatusEffect] = None,
     ):
         super().__init__(
             x=x,
@@ -162,18 +167,17 @@ class Hazard(Entity):
     # A walkable entity that can inflict a status effect to any actors steping on it,
     # and can also disapear after some time. Used for water, gases, etc.
     def __init__(
-        self,
-        *,
-        x: int = 0,
-        y: int = 0,
-        char: str = "?",
-        color: Tuple[int, int, int] = (255, 255, 255),
-        name: str = "<Unnamed>",
-        inspect_message: Optional[str] = "I don't know what this thing is.",
-        duration: int = 0,
-        is_permanent: bool = False,
-        moves_around: bool = False,
-        hazard_component: type[HazardComponent],
+            self,
+            *,
+            x: int = 0,
+            y: int = 0,
+            char: str = "?",
+            color: Tuple[int, int, int] = (255, 255, 255),
+            name: str = "<Unnamed>",
+            duration: int = 0,
+            is_permanent: bool = False,
+            moves_around: bool = False,
+            hazard_component: type[HazardComponent],
     ):
         super().__init__(
             x=x,
