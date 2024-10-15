@@ -61,7 +61,7 @@ class Equipment(BaseComponent):
 
     # Checks if equipment is worn
     def item_is_equipped(self, item: Item) -> bool:
-        return self.weapon == item or self.armour == item
+        return self.weapon == item or self.armour == item or self.ring == item or self.helmet == item or self.amulet == item
 
     # Unequip item message
     def unequip_message(self, item_name: str) -> None:

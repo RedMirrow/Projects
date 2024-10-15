@@ -150,14 +150,32 @@ class MeleeAction(ActionWithDirection):
         else:
             attack_colour = colour.enemy_atk
         if damage > 0:
-            self.engine.message_log.add_message(
-                f"{attack_desc} for {damage} hit points.", attack_colour
-            )
+            if damage > target.fighter.max_hp :
+                # Prevents the player from one-hitting mobs
+                if self.entity is self.engine.player:
+                    damage = target.fighter.max_hp - 1
+                    self.engine.message_log.add_message(
+                        f"{attack_desc} for {damage} hit points.", attack_colour
+                    )
+
+            else:
+                self.engine.message_log.add_message(
+                    f"{attack_desc} for {damage} hit points.", attack_colour
+                )
+
             target.fighter.hp -= damage
         else:
-            self.engine.message_log.add_message(
-                f"{attack_desc} but does no damage.", attack_colour
-            )
+            # Player attacks are ineffective against high armour
+            if self.entity is self.engine.player:
+                self.engine.message_log.add_message(
+                    f"{attack_desc} but does no damage.", attack_colour)
+            # Enemies always pierce for at least 1 damage to prevent taking only defence upgrades
+            else:
+                target.fighter.hp -= 1
+                self.engine.message_log.add_message(
+                    f"{attack_desc} for 1 hit points.", attack_colour
+                )
+
 class MovementAction(ActionWithDirection):
 
     def perform(self) -> None:
