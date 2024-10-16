@@ -128,6 +128,7 @@ item_chances: Dict[int, List[Tuple[Entity, int]]] = {
         # Low tier loot filter
 
         (entity_factories.fireball_scroll, 30),
+        (entity_factories.fireblast_scroll, 10),
         (entity_factories.greatsword,10),
         (entity_factories.towershield, 10),
         (entity_factories.knightHelm, 10),
@@ -145,12 +146,43 @@ item_chances: Dict[int, List[Tuple[Entity, int]]] = {
 
 # Enemy chance
 enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
-    0: [(entity_factories.rat, 80),(entity_factories.skeleton, 40)],
-    1: [(entity_factories.mama_slime, 10)],
-    2: [(entity_factories.rat, 40),(entity_factories.skeleton, 60)],
-    3: [(entity_factories.orc, 15),(entity_factories.bile_spew, 25),(entity_factories.skeleton, 80),(entity_factories.rat, 5), (entity_factories.mama_slime, 20)],
-    5: [(entity_factories.orc, 30),(entity_factories.troll, 5),(entity_factories.skeleton, 60),(entity_factories.rat, 0)],
-    7: [(entity_factories.orc, 60),(entity_factories.troll, 15),(entity_factories.skeleton, 20)],
+    0: [
+        (entity_factories.rat, 80),
+        (entity_factories.hound, 30),
+        (entity_factories.skeleton, 30)
+        ],
+    1: [
+        (entity_factories.mama_slime, 10)
+    ],
+    2: [
+        (entity_factories.rat, 40),
+        (entity_factories.skeleton, 60)
+    ],
+    3: [
+        (entity_factories.orc, 15),
+        (entity_factories.mama_bile, 25),
+        (entity_factories.skeleton, 80),
+        (entity_factories.rat, 5),
+        (entity_factories.hound, 10),
+        (entity_factories.mama_slime, 20)
+    ],
+    5: [
+        (entity_factories.orc, 30),
+        (entity_factories.troll, 5),
+        (entity_factories.skeleton, 60),
+        (entity_factories.rat, 0),
+        (entity_factories.hound, 5),
+    ],
+    6:[
+        (entity_factories.skeleton, 5),
+        (entity_factories.houndTindalos, 10),
+    ],
+    7: [
+        (entity_factories.orc, 60),
+        (entity_factories.troll, 15),
+        (entity_factories.houndTindalos, 30),
+        (entity_factories.skeletonKnight, 20),
+    ],
 }
 
 # Get the limit values

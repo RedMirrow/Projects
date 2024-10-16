@@ -1,5 +1,7 @@
+from operator import index
+from random import choice
 from typing import Tuple
-
+import colour
 import numpy as np  # type: ignore
 
 # Tile graphics structured type compatible with Console.tiles_rgb.
@@ -36,21 +38,25 @@ def new_tile(
 # SHROUD represents unexplored, unseen tiles
 SHROUD = np.array((ord(" "), (255, 255, 255), (0, 0, 0)), dtype=graphic_dt)
 
-floor = new_tile(
-    walkable=True,
-    transparent=True,
-    dark=(ord("_"), (100, 100, 100), (0, 0, 0)),
-    light=(ord("_"), (200, 200, 200), (0, 0, 0)),
-)
-wall = new_tile(
-    walkable=False,
-    transparent=False,
-    dark=(ord("#"), (255, 255, 255), (0, 0, 0)),
-    light=(ord("#"), (255, 255, 255), (0, 0, 0)),
-)
+
 down_stairs = new_tile(
     walkable=True,
     transparent=True,
-    dark=(ord(">"), (0, 0, 100), (0, 0, 0)),
+    dark=(ord(">"), (100, 0, 100), (0, 0, 0)),
     light=(ord(">"), (255, 255, 255), (0, 0, 0)),
 )
+floor = new_tile(
+            walkable=True,
+            transparent=True,
+            dark=(ord("_"), (128, 128, 128), (0, 0, 0)),
+            light=(ord("_"), (255, 255, 255), (0, 0, 0))
+
+        )
+wall = new_tile(
+            walkable=False,
+            transparent=False,
+            dark=(ord("#"), (128, 128, 128), (0, 0, 0)),
+            light=(ord("#"), (255, 255, 255), (0, 0, 0)),
+
+        )
+

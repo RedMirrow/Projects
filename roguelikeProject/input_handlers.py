@@ -97,8 +97,8 @@ class PopupMessage(BaseEventHandler):
     def on_render(self, console: tcod.Console) -> None:
         # Render the parent and dim the result, then print the message on top.
         self.parent.on_render(console)
-        console.tiles_rgb["fg"] //= 8
-        console.tiles_rgb["bg"] //= 8
+        console.rgb["fg"] //= 8
+        console.rgb["bg"] //= 8
 
         console.print(
             console.width // 2,
@@ -106,7 +106,7 @@ class PopupMessage(BaseEventHandler):
             self.text,
             fg=colour.white,
             bg=colour.black,
-            alignment=tcod.CENTER,
+            alignment=libtcodpy.CENTER,
         )
 
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[BaseEventHandler]:

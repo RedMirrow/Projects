@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import Iterable, Iterator, Optional, TYPE_CHECKING
 import numpy as np  # type: ignore
 from tcod.console import Console
+
+import colour
 from entity import Actor, Item, Hazard
 import tile_types
 
@@ -144,6 +146,7 @@ class GameWorld:
 
         self.current_floor += 1
 
+
         self.engine.game_map = generate_dungeon(
             max_rooms=self.max_rooms,
             room_min_size=self.room_min_size,
@@ -152,3 +155,4 @@ class GameWorld:
             map_height=self.map_height,
             engine=self.engine,
         )
+

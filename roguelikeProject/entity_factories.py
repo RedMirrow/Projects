@@ -39,6 +39,7 @@ player = Actor(
 
 
 rat = Actor(
+    # The weakest opponent naturally available
     char="r",
     color=(222, 184, 135),
     name="Rat",
@@ -46,9 +47,35 @@ rat = Actor(
     fighter=Fighter(hp=10, base_defense=0, base_power=2),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
-    level=Level(xp_given=2),
+    level=Level(xp_given=5),
+)
+
+hound = Actor(
+    # A slightly stronger opponent than a rat
+    char="h",
+    color=(222, 184, 135),
+    name="Hound",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=10, base_defense=0, base_power=3),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=10),
+)
+
+houndTindalos = Actor(
+    # A hard hitting, but fragile opponent
+    char="h",
+    color=(255, 140, 120),
+    name="Hound of Tindalos",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=20, base_defense=0, base_power=10),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=40),
 )
 skeleton = Actor(
+    # Stronger than the dog and rat,
+    # more common in deeper levels than aforementioned 2
     char="s",
     color=(255, 245, 238),
     name="Skeleton",
@@ -59,12 +86,26 @@ skeleton = Actor(
     level=Level(xp_given=10),
 )
 
+skeletonKnight = Actor(
+    # Armored version of the skeleton
+    # To replace the skeleton further down
+    char="S",
+    color=(255, 245, 238),
+    name="Skeleton Knight",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=45, base_defense=5, base_power=7),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=50),
+)
+
 orc = Actor(
+    # The first major threat to the player, appearing on level 3 and further
     char="o",
     color=(63, 127, 63),
     name="Orc",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=30, base_defense=2, base_power=6),
+    fighter=Fighter(hp=30, base_defense=2, base_power=5),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=30),
@@ -80,7 +121,20 @@ troll = Actor(
     level=Level(xp_given=100),
 )
 
+armour_troll = Actor(
+    char="T",
+    color=(128, 128, 128),
+    name="Armoured Troll",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=100, base_defense=12, base_power=11),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=175),
+)
+
+# Creatures that summon/get summoned by other creatures
 slime = Actor(
+    # An enemy to be spawned by mama_slime opponent
     char="m",
     color=(255, 80, 80),
     name="Slime ",
@@ -93,6 +147,7 @@ slime = Actor(
 
 
 mama_slime = Actor(
+    # An enemy that avoids conflict and spawns basic slimes
     char="M",
     color=(255, 80, 80),
     name="Mama Slime",
@@ -103,7 +158,38 @@ mama_slime = Actor(
     equipment=Equipment(),
 )
 mama_slime.ai.setup(slime, 5)
+# To set up the mama_slime with AI
+
+
+slime_bile = Actor(
+    # An enemy to be spawned by mama_slime opponent
+    char="m",
+    color=(20, 255, 80),
+    name="Slime ",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=15, base_defense=2,  base_power=4),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=15),
+    equipment=Equipment(),
+)
+
+
+mama_bile = Actor(
+    # An enemy that avoids conflict and spawns basic slimes
+    char="M",
+    color=(20, 255, 80),
+    name="Mama Bile",
+    ai_cls=SpawnerEnemy,
+    fighter=Fighter(hp=80, base_defense=2,  base_power=3),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=80),
+    equipment=Equipment(),
+)
+mama_bile.ai.setup(slime_bile, 5)
+# To set up the mama_slime with AI
+
 bile_spew = Actor(
+    # An attempt at an enemy that spawns a gas entity, does not work as of 16/10/24
     char="B",
     color=(20, 255, 80),
     name="Bile Gas Spew",
@@ -118,7 +204,7 @@ bile_spew.ai.setup(poisonGas, 2)
 #=====================================================================#
 #                        Consumables - Potion                         #
 #=====================================================================#
-
+# Potions are to be templated into this area
 health_potion = Item(
     char="!",
     color=(127, 0, 255),
@@ -135,42 +221,57 @@ greater_health_potion = Item(
 #=====================================================================#
 #                        Consumables - Scroll                         #
 #=====================================================================#
-
-lightning_scroll = Item(
+# Scrolls/spells are to be templated into this area
+lightning_scroll = Item( # Longer ranged spell with notable damage
     char="~",
     color=(255, 255, 0),
     name="Lightning Scroll",
     consumable=consumable.LightningDamageConsumable(damage=20, maximum_range=5),
 )
-confusion_scroll = Item(
+smite_scroll = Item( # Close ranged spell with massive damage
+    char="~",
+    color=(255, 215, 0),
+    name="Smite Scroll",
+    consumable=consumable.LightningDamageConsumable(damage=60, maximum_range=2),
+)
+confusion_scroll = Item( # Scrambles movement of a target
     char="~",
     color=(207, 63, 255),
     name="Confusion Scroll",
     consumable=consumable.ConfusionConsumable(number_of_turns=8),
 )
-weaken_scroll = Item(
+weaken_scroll = Item( # Lowers target's attack by 1 permamently
     char="~",
     color=(255, 0, 255),
     name="Weaken Scroll",
     consumable=consumable.WeakenConsumable(number_of_turns=1),
 )
-strength_scroll = Item(
+strength_scroll = Item( # Increases target's attack by 1 permamently
     char="+",
     color=(255, 215, 0),
     name="Strength Scroll",
     consumable=consumable.StrenghtenConsumable(number_of_turns=1),
 )
-fireball_scroll = Item(
+fireball_scroll = Item( # Area of effect damage spell
     char="~",
-    color=(255, 0, 0),
+    color=(200, 0, 0),
     name="Fireball Scroll",
     consumable=consumable.FireballDamageConsumable(damage=15, radius=3),
+)
+fireblast_scroll = Item( # Large area of effect damage spell, likely to hit the caster
+    char="~",
+    color=(255, 0, 0),
+    name="Fireblast Scroll",
+    consumable=consumable.FireballDamageConsumable(damage=30, radius=4),
 )
 #=====================================================================#
 #                             Equipment                               #
 #=====================================================================#
+# Various types of equipment are templated below
+
 
 #==============================WEAPONS================================#
+# Symbols: /, }
 dagger = Item(
     char="/", color=(180, 189, 186),
     name="Dagger", equippable=equippable.Dagger())
@@ -197,6 +298,7 @@ towershield = Item(
     name="Towershield", equippable=equippable.GreaterShield())
 
 #==============================ARMOUR================================#
+# Symbols: [
 cloth_armour = Item(
     char="[", color=(255,255,255),
     name="Clothing", equippable=equippable.cloths())
@@ -218,6 +320,7 @@ strong_chain_mail = Item(
     name="Chain Mail of Strength", equippable=equippable.StrongChainMail())
 
 #==============================HELMETS===============================#
+# Symbols: ^
 leather_cap = Item(
     char="^", color=(171, 88, 46),
     name="Leather Cap", equippable=equippable.LeatherCap())
@@ -239,6 +342,8 @@ knightHelm = Item(
     name="Knight Helm", equippable=equippable.FullPlateHelmet())
 
 #===============================RINGS================================#
+# Symbols: c
+
 strengthRing = Item(
     char="c", color=(255, 151, 0),
     name="Ring of Strength", equippable=equippable.StrengthRing())
@@ -259,6 +364,7 @@ turtleRing = Item(
     name="Ring of the Turtle", equippable=equippable.TurtleRing())
 
 #==============================AMULETS===============================#
+# Symbols: u
 strengthAmulet = Item(
     char="u", color=(255, 151, 0),
     name="Amulet of Strength", equippable=equippable.StrengthAmulet())
