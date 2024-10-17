@@ -37,6 +37,27 @@ player = Actor(
     level=Level(level_up_base=200),
 )
 
+lostSoul = Actor(
+    char="@",
+    color=(60, 60, 60),
+    name=" Lost Soul",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=30, base_defense=1, base_power=3),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=65),
+)
+
+greatLostSoul = Actor(
+    char="@",
+    color=(128, 128, 128),
+    name="Greater Lost Soul",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=50, base_defense=3, base_power=6),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=65),
+)
 
 rat = Actor(
     # The weakest opponent naturally available

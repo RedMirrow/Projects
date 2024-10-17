@@ -59,6 +59,7 @@ class GreaterShield(Equippable):
 class cloths(Equippable):
     def __init__(self) -> None:
         super().__init__(equipment_type=EquipmentType.ARMOUR, defense_bonus=1)
+
 class LeatherArmour(Equippable):
     def __init__(self) -> None:
         super().__init__(equipment_type=EquipmentType.ARMOUR, defense_bonus=2)

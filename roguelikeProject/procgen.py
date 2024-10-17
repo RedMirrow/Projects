@@ -82,8 +82,8 @@ item_chances: Dict[int, List[Tuple[Entity, int]]] = {
         (entity_factories.axe,10),
         (entity_factories.swordAndShield,10),
 
-        (entity_factories.featherCap, 10),
-        (entity_factories.agileCap, 10),
+        (entity_factories.featherCap, 5),
+        (entity_factories.agileCap, 5),
 
         (entity_factories.strengthAmulet,5),
         (entity_factories.agileAmulet,5),
@@ -156,6 +156,7 @@ enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     ],
     2: [
         (entity_factories.rat, 40),
+        (entity_factories.lostSoul, 10),
         (entity_factories.skeleton, 60)
     ],
     3: [
@@ -167,6 +168,8 @@ enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
         (entity_factories.mama_slime, 20)
     ],
     5: [
+        (entity_factories.lostSoul, 5),
+        (entity_factories.greatLostSoul, 20),
         (entity_factories.orc, 30),
         (entity_factories.troll, 5),
         (entity_factories.skeleton, 60),

@@ -4,6 +4,7 @@ from typing import Optional, Tuple, TYPE_CHECKING
 import colour
 import exceptions
 import random
+
 if TYPE_CHECKING:
     from engine import Engine
     from entity import Actor, Entity, Item
@@ -81,9 +82,13 @@ class DropItem(ItemAction):
 # Wait a turn
 class WaitAction(Action):
     def perform(self) -> None:
-        heal_chance = random.random()
-        if heal_chance > 0.85:
-            self.entity.fighter.hp += 1
+        # Only the player is meant to heal whilst waiting
+        if self.entity.name == "Player":
+            heal_chance = random.random()
+            if heal_chance > 0.85:
+                self.entity.fighter.hp += 1
+
+
         pass
 
 # Equips an item
@@ -190,9 +195,15 @@ class MovementAction(ActionWithDirection):
             # Destination is blocked by an entity.
             raise exceptions.Impossible("That way is blocked.")
         self.entity.move(self.dx, self.dy)
-        heal_chance = random.random()
-        if heal_chance > 0.95:
-            self.entity.fighter.hp += 1
+        # Only the player is meant to heal whilst waiting
+        if self.entity.name == "Player":
+            heal_chance = random.random()
+            if heal_chance > 0.95:
+                self.entity.fighter.hp += 1
+
+
+
+
 
 # When the player bumps into an entity do this
 class BumpAction(ActionWithDirection):

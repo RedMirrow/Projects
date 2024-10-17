@@ -48,7 +48,7 @@ def new_game() -> Engine:
     engine.message_log.add_message(
         "Hello and welcome, lost soul, to the crypt!", colour.welcome_text
     )
-    # Gives the player an armour and
+    # Gives the player an 1 def armour and 1 atk weapon
     dagger = copy.deepcopy(entity_factories.dagger)
     cloth = copy.deepcopy(entity_factories.cloth_armour)
 
