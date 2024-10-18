@@ -86,10 +86,10 @@ hound = Actor(
 houndTindalos = Actor(
     # A hard hitting, but fragile opponent
     char="h",
-    color=(255, 140, 120),
+    color=(255, 80, 80),
     name="Hound of Tindalos",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=20, base_defense=0, base_power=10),
+    fighter=Fighter(hp=20, base_defense=1, base_power=10),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=40),
@@ -114,10 +114,10 @@ skeletonKnight = Actor(
     color=(255, 245, 238),
     name="Skeleton Knight",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=45, base_defense=5, base_power=7),
+    fighter=Fighter(hp=60, base_defense=8, base_power=10),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
-    level=Level(xp_given=50),
+    level=Level(xp_given=100),
 )
 
 orc = Actor(
@@ -130,6 +130,17 @@ orc = Actor(
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=30),
+)
+orcBerserk = Actor(
+    # Massive damage, miniscule health pool due to defense malus
+    char="o",
+    color=(255, 127, 63),
+    name="Berserker Orc",
+    ai_cls=HostileEnemy,
+    fighter=Fighter(hp=50, base_defense=-2, base_power=15),
+    equipment=Equipment(),
+    inventory=Inventory(capacity=0),
+    level=Level(xp_given=80),
 )
 troll = Actor(
     char="T",
@@ -147,7 +158,7 @@ armour_troll = Actor(
     color=(128, 128, 128),
     name="Armoured Troll",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=100, base_defense=12, base_power=11),
+    fighter=Fighter(hp=120, base_defense=12, base_power=11),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=175),
@@ -178,7 +189,7 @@ mama_slime = Actor(
     level=Level(xp_given=40),
     equipment=Equipment(),
 )
-mama_slime.ai.setup(slime, 5)
+mama_slime.ai.setup(slime, 2)
 # To set up the mama_slime with AI
 
 
@@ -206,11 +217,11 @@ mama_bile = Actor(
     level=Level(xp_given=80),
     equipment=Equipment(),
 )
-mama_bile.ai.setup(slime_bile, 5)
+mama_bile.ai.setup(slime_bile, 2)
 # To set up the mama_slime with AI
 
 bile_spew = Actor(
-    # An attempt at an enemy that spawns a gas entity, does not work as of 16/10/24
+    # An attempt at an enemy that spawns a gas entity, does not work as of 18/10/24
     char="B",
     color=(20, 255, 80),
     name="Bile Gas Spew",
@@ -311,6 +322,9 @@ axe = Item(
 greatsword = Item(
     char="/", color=(232, 219, 216),
     name="Greatsword", equippable=equippable.Greatsword())
+greataxe = Item(
+    char="/", color=(128, 128, 128),
+    name="Greataxe", equippable=equippable.Greataxe())
 swordAndBigShield = Item(
     char="}", color=(202, 209, 206),
     name="Sword and Greatshield", equippable=equippable.SwordAndGreatShield())

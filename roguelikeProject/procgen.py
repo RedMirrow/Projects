@@ -161,7 +161,7 @@ enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     ],
     3: [
         (entity_factories.orc, 15),
-        (entity_factories.mama_bile, 25),
+        (entity_factories.mama_bile, 15),
         (entity_factories.skeleton, 80),
         (entity_factories.rat, 5),
         (entity_factories.hound, 10),
@@ -178,13 +178,24 @@ enemy_chances: Dict[int, List[Tuple[Entity, int]]] = {
     ],
     6:[
         (entity_factories.skeleton, 5),
+        (entity_factories.hound, 0),
         (entity_factories.houndTindalos, 10),
+        (entity_factories.mama_slime, 10)
     ],
     7: [
-        (entity_factories.orc, 60),
+        (entity_factories.orc, 40),
+        (entity_factories.orcBerserk, 40),
         (entity_factories.troll, 15),
         (entity_factories.houndTindalos, 30),
         (entity_factories.skeletonKnight, 20),
+    ],
+    9: [
+        (entity_factories.orcBerserk, 60),
+        (entity_factories.orc, 20),
+        (entity_factories.troll, 5),
+        (entity_factories.armour_troll, 20),
+        (entity_factories.houndTindalos, 30),
+        (entity_factories.skeletonKnight, 40),
     ],
 }
 

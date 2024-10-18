@@ -43,6 +43,9 @@ class Sword(Equippable):
 class Axe(Equippable):
     def __init__(self) -> None:
         super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=3)
+class Greataxe(Equippable):
+    def __init__(self) -> None:
+        super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=4)
 
 class SwordAndGreatShield(Equippable):
     def __init__(self) -> None:
