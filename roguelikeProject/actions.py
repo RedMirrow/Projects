@@ -172,14 +172,50 @@ class MeleeAction(ActionWithDirection):
         else:
             # Player attacks are ineffective against high armour
             if self.entity is self.engine.player:
-                self.engine.message_log.add_message(
-                    f"{attack_desc} but does no damage.", attack_colour)
-            # Enemies always pierce for at least 1 damage to prevent taking only defence upgrades
+                # Adding variation to blocked attacks
+                # Approximately 33% chance for each
+                text_choice = random.random()
+                if text_choice <= 0.35:
+                    self.engine.message_log.add_message(
+                        f"{target.name} dodges the attack!.", attack_colour
+                    )
+                elif text_choice <= 0.70:
+                    self.engine.message_log.add_message(
+                        f"{target.name} parries the attack!.", attack_colour
+                    )
+                else:
+                    self.engine.message_log.add_message(
+                        f"{target.name} blocks the attack!.", attack_colour
+                    )
+            # Enemies can pierce for at least 1 damage if player's defence exceeds their damage
             else:
-                target.fighter.hp -= 1
-                self.engine.message_log.add_message(
-                    f"{attack_desc} for 1 hit points.", attack_colour
-                )
+                # Calculating NPC's hit chance if the attack connects
+                hit_chance = random.random()
+                dodge_chance = (target.fighter.defense - self.entity.fighter.power)
+
+                if hit_chance > (dodge_chance * 0.05):
+                    target.fighter.hp -= 1
+                    self.engine.message_log.add_message(
+                        f"{attack_desc} for 1 hit points.", attack_colour
+                    )
+                else:
+                    # Adding variation to blocked attacks
+                    # Approximately 33% chance for each
+                    text_choice = random.random()
+                    if text_choice <= 0.35:
+                        self.engine.message_log.add_message(
+                            f"{target.name} dodges the attack!.", attack_colour
+                        )
+                    elif text_choice <= 0.70:
+                        self.engine.message_log.add_message(
+                            f"{target.name} parries the attack!.", attack_colour
+                        )
+                    else:
+                        self.engine.message_log.add_message(
+                            f"{target.name} blocks the attack!.", attack_colour
+                        )
+
+
 
 class MovementAction(ActionWithDirection):
 

@@ -217,7 +217,7 @@ mama_bile = Actor(
     level=Level(xp_given=80),
     equipment=Equipment(),
 )
-mama_bile.ai.setup(slime_bile, 2)
+mama_bile.ai.setup(slime_bile, 3)
 # To set up the mama_slime with AI
 
 bile_spew = Actor(
@@ -231,7 +231,7 @@ bile_spew = Actor(
     level=Level(xp_given=60),
     equipment=Equipment(),
 )
-bile_spew.ai.setup(poisonGas, 2)
+bile_spew.ai.setup(poisonGas, 3)
 
 #=====================================================================#
 #                        Consumables - Potion                         #
