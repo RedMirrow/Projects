@@ -14,5 +14,8 @@ Python Roguelike (name to be changed) - A Python dungeon crawler roguelike game 
 
 
 # Courses Done
-MAE score - The lower the score the more accurate the model
-Kaggle Intro to Machine learning - Entered the competition and finished with a MAE score of 18095 (rounded) 
+MAE score - The lower the score the more accurate the model (scores here are rounded to remove .XXX-)
+
+Kaggle Intro to Machine Learning - Entered the competition and finished with a MAE score of 18095  
+
+Kaggle Intermediate Machine Learning - Rentered the associated competition with a MAE score of 16422
