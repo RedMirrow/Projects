@@ -9,3 +9,5 @@ Kaggle Intermediate Machine Learning - Re-entered the associated competition wit
 Kaggle Machine Learning Explainability - Course on how to interpret machine model data and how to plot said data for a visual explanation
 
 Kaggle Intro to Deep Learning - Course on how to create machine models with multiple layers of neurons and how to improve the model's predictions
+
+Kaggle Time Series - Course on forecasting using machine models
