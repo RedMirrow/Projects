@@ -11,3 +11,5 @@ Kaggle Machine Learning Explainability - Course on how to interpret machine mode
 Kaggle Intro to Deep Learning - Course on how to create machine models with multiple layers of neurons and how to improve the model's predictions
 
 Kaggle Time Series - Course on forecasting using machine models
+
+Kaggle Feature Engineering - Course on improving features to improve model's predictions
