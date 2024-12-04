@@ -14,3 +14,6 @@ Python Roguelike (name to be changed) - A Python dungeon crawler roguelike game 
 
 
 Courses Done are within Course Certificates folder
+
+Additionally I take part in Thrive's translation efforts at
+https://translate.revolutionarygamesstudio.com/user/RedMirrow/#changes
