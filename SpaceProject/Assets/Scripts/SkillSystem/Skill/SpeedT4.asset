@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7566492d3c9811b488cfcfba62727fc1, type: 3}
+  m_Name: SpeedT4
+  m_EditorClassIdentifier: 
+  skillName: Speed Freak
+  skillDesc: Dubious Engine Upgrades improve the ship's engine by 30% Increases Boost
+    Strength by 50% Lowers Ship Health by 70%
+  maxLvl: 1
+  skillIcon: {fileID: 21300000, guid: febae9778bc90754eb7212cf284584e0, type: 3}

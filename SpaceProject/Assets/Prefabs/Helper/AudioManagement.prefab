@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1520720869976205317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4594229223351110523}
+  - component: {fileID: 7685840845979250327}
+  m_Layer: 0
+  m_Name: AudioManagement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4594229223351110523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520720869976205317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7685840845979250327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520720869976205317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4a463da4584e841b066ee8980c780b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: BackgroundMusic
+    clip: {fileID: 8300000, guid: c131fcb2f6346e44f95e117ba65fb9ac, type: 3}
+    volume: 0.05
+    pitch: 1
+    loops: 1
+    source: {fileID: 0}
+  - name: AsteroidDestroyed
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 1
+    loops: 0
+    source: {fileID: 0}
+  - name: ShipDestroyed
+    clip: {fileID: 8300000, guid: d89e3e730bce443569b30b593a273361, type: 3}
+    volume: 0.3
+    pitch: 1
+    loops: 0
+    source: {fileID: 0}
+  - name: LevelUp
+    clip: {fileID: 8300000, guid: e2deb465f1e328340aaa8b2ef20503dc, type: 3}
+    volume: 0.2
+    pitch: 1
+    loops: 0
+    source: {fileID: 0}
+  - name: HoverOverPerk
+    clip: {fileID: 8300000, guid: 9a8eca3d80d867a46aac2efc9fd42390, type: 3}
+    volume: 0.1
+    pitch: 1
+    loops: 0
+    source: {fileID: 0}
+  - name: BtnHover
+    clip: {fileID: 8300000, guid: 3b26d157df0154944923b1d1148f8ea3, type: 3}
+    volume: 0.1
+    pitch: 1
+    loops: 0
+    source: {fileID: 0}
+  - name: MenuBtnPressed
+    clip: {fileID: 8300000, guid: dd509af2d03b44549ba78ed7dd5ce42f, type: 3}
+    volume: 0.1
+    pitch: 1
+    loops: 0
+    source: {fileID: 0}
+  - name: PlayerDestroyed
+    clip: {fileID: 8300000, guid: d89e3e730bce443569b30b593a273361, type: 3}
+    volume: 0.5
+    pitch: 2
+    loops: 0
+    source: {fileID: 0}
