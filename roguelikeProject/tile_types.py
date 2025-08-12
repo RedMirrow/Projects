@@ -42,21 +42,28 @@ SHROUD = np.array((ord(" "), (255, 255, 255), (0, 0, 0)), dtype=graphic_dt)
 down_stairs = new_tile(
     walkable=True,
     transparent=True,
-    dark=(ord(">"), (100, 0, 100), (0, 0, 0)),
-    light=(ord(">"), (255, 255, 255), (0, 0, 0)),
+    dark=(ord(">"), (100, 0, 100), (37, 25, 25)),
+    light=(ord(">"), (200, 0, 200), (75, 50, 50)),
 )
-floor = new_tile(
+floor = new_tile( # .
             walkable=True,
             transparent=True,
-            dark=(ord("."), (128, 128, 128), (0, 0, 0)),
-            light=(ord("."), (255, 255, 255), (0, 0, 0))
+            dark=(ord(" "), (128, 128, 128), (37, 25, 25)),
+            light=(ord(" "), (150, 100, 100), (75, 50, 50))
 
         )
-wall = new_tile(
+wall = new_tile( # #
             walkable=False,
             transparent=False,
-            dark=(ord("#"), (128, 128, 128), (0, 0, 0)),
-            light=(ord("#"), (255, 255, 255), (0, 0, 0)),
+            dark=(ord(" "), (128, 128, 128), (128, 128, 128)),
+            light=(ord(" "), (255, 255, 255), (255, 255, 255)),
+
+        )
+statue = new_tile(
+            walkable=False,
+            transparent=False,
+            dark=(ord("&"), (128, 128, 128), (0, 0, 0)),
+            light=(ord("&"), (255, 255, 255), (0, 0, 0)),
 
         )
 

@@ -70,14 +70,14 @@ class Engine:
         self.game_map.visible[:] = compute_fov(
             self.game_map.tiles["transparent"],
             (self.player.x, self.player.y),
-            radius=8,
+            radius=7,
         )
         # If a tile is "visible" it should be added to "explored".
         self.game_map.explored |= self.game_map.visible
 
     def render(self, console: Console) -> None:
         self.game_map.render(console)
-        self.message_log.render(console=console, x=21, y=45, width=40, height=5)
+        self.message_log.render(console=console, x=21, y=45, width=60, height=5)
         # Health bar, same thing could be done for mana later on
         render_functions.render_bar(
             console=console,

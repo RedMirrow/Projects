@@ -49,7 +49,7 @@ class MessageLog:
         `x`, `y`, `width`, `height` is the rectangular region to render onto
         the `console`.
         """
-        self.render_messages(console, x, y, width, height, self.messages)
+        self.render_messages(console, x, y+10, width, height, self.messages)
 
     @staticmethod
     def wrap(string: str, width: int) -> Iterable[str]:

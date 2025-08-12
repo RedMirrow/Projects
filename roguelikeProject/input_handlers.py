@@ -41,14 +41,14 @@ MOVE_KEYS = {
     tcod.event.KeySym.KP_8: (0, -1),
     tcod.event.KeySym.KP_9: (1, -1),
     # Vi keys.
-    tcod.event.KeySym.h: (-1, 0),
-    tcod.event.KeySym.j: (0, 1),
-    tcod.event.KeySym.k: (0, -1),
-    tcod.event.KeySym.l: (1, 0),
-    tcod.event.KeySym.y: (-1, -1),
-    tcod.event.KeySym.u: (1, -1),
-    tcod.event.KeySym.b: (-1, 1),
-    tcod.event.KeySym.n: (1, 1),
+    tcod.event.KeySym.H: (-1, 0),
+    tcod.event.KeySym.J: (0, 1),
+    tcod.event.KeySym.K: (0, -1),
+    tcod.event.KeySym.L: (1, 0),
+    tcod.event.KeySym.Y: (-1, -1),
+    tcod.event.KeySym.U: (1, -1),
+    tcod.event.KeySym.B: (-1, 1),
+    tcod.event.KeySym.N: (1, 1),
 }
 
 WAIT_KEYS = {
@@ -282,7 +282,7 @@ class LevelUpEventHandler(AskUserEventHandler):
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
         player = self.engine.player
         key = event.sym
-        index = key - tcod.event.KeySym.a
+        index = key - tcod.event.KeySym.A
 
         if 0 <= index <= 2:
             if index == 0:
@@ -364,7 +364,7 @@ class InventoryEventHandler(AskUserEventHandler):
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
         player = self.engine.player
         key = event.sym
-        index = key - tcod.event.KeySym.a
+        index = key - tcod.event.KeySym.A
 
         if 0 <= index <= 26:
             try:
@@ -426,11 +426,11 @@ class SelectIndexHandler(AskUserEventHandler):
         key = event.sym
         if key in MOVE_KEYS:
             modifier = 1  # Holding modifier keys will speed up key movement.
-            if event.mod & (tcod.event.KMOD_LSHIFT | tcod.event.KMOD_RSHIFT):
+            if event.mod & (tcod.event.Modifier.LSHIFT | tcod.event.Modifier.RSHIFT):
                 modifier *= 5
-            if event.mod & (tcod.event.KMOD_LCTRL | tcod.event.KMOD_RCTRL):
+            if event.mod & (tcod.event.Modifier.LCTRL | tcod.event.Modifier.RCTRL):
                 modifier *= 10
-            if event.mod & (tcod.event.KMOD_LALT | tcod.event.KMOD_RALT):
+            if event.mod & (tcod.event.Modifier.LALT | tcod.event.Modifier.RALT):
                 modifier *= 20
 
             x, y = self.engine.mouse_location
@@ -525,7 +525,7 @@ class MainGameEventHandler(EventHandler):
 
         player = self.engine.player
         if key == tcod.event.KeySym.PERIOD and modifier & (
-                tcod.event.KMOD_LSHIFT | tcod.event.KMOD_RSHIFT
+                tcod.event.Modifier.LSHIFT | tcod.event.Modifier.RSHIFT
         ):
             return actions.TakeStairsAction(player)
 
@@ -537,17 +537,17 @@ class MainGameEventHandler(EventHandler):
 
         elif key == tcod.event.KeySym.ESCAPE:
             raise SystemExit()
-        elif key == tcod.event.KeySym.v:
+        elif key == tcod.event.KeySym.V:
             return HistoryViewer(self.engine)
 
-        elif key == tcod.event.KeySym.g:
+        elif key == tcod.event.KeySym.G:
             action = PickupAction(player)
 
-        elif key == tcod.event.KeySym.i:
+        elif key == tcod.event.KeySym.I:
             return InventoryActivateHandler(self.engine)
-        elif key == tcod.event.KeySym.d:
+        elif key == tcod.event.KeySym.D:
             return InventoryDropHandler(self.engine)
-        elif key == tcod.event.KeySym.c:
+        elif key == tcod.event.KeySym.C:
             return CharacterScreenEventHandler(self.engine)
         elif key == tcod.event.KeySym.SLASH:
             return LookHandler(self.engine)

@@ -343,6 +343,7 @@ def generate_dungeon(
         # Dig out this rooms inner area.
         dungeon.tiles[new_room.inner] = tile_types.floor
 
+
         if len(rooms) == 0:
             # The first room, where the player starts.
             player.place(*new_room.center, dungeon)

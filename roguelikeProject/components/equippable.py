@@ -49,14 +49,14 @@ class Greataxe(Equippable):
 
 class SwordAndGreatShield(Equippable):
     def __init__(self) -> None:
-        super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=3, defense_bonus=2)
+        super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=3, defense_bonus=3)
 
 class Greatsword(Equippable):
     def __init__(self) -> None:
         super().__init__(equipment_type=EquipmentType.WEAPON, power_bonus=4)
 class GreaterShield(Equippable):
     def __init__(self) -> None:
-        super().__init__(equipment_type=EquipmentType.WEAPON, defense_bonus=4, power_bonus=-1)
+        super().__init__(equipment_type=EquipmentType.WEAPON, defense_bonus=5, power_bonus=-1)
 
 # ARMOUR - BODY
 class cloths(Equippable):

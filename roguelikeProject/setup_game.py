@@ -23,8 +23,8 @@ background_image = tcod.image.load("menu_background.png")[:, :, :3]
 
 def new_game() -> Engine:
     """Return a brand new game session as an Engine instance."""
-    map_width = 80
-    map_height = 43
+    map_width = 100
+    map_height = 53
 
     room_max_size = 10
     room_min_size = 6
@@ -47,6 +47,9 @@ def new_game() -> Engine:
 
     engine.message_log.add_message(
         "Hello and welcome, lost soul, to the crypt!", colour.welcome_text
+    )
+    engine.message_log.add_message(
+        "Press I to open inventory \nPress D to drop items \nPress / to look around \nPress V to open message log", colour.welcome_text
     )
     # Gives the player an 1 def armour and 1 atk weapon
     dagger = copy.deepcopy(entity_factories.dagger)
@@ -108,9 +111,9 @@ class MainMenu(input_handlers.BaseEventHandler):
     def ev_keydown(
         self, event: tcod.event.KeyDown
     ) -> Optional[input_handlers.BaseEventHandler]:
-        if event.sym in (tcod.event.KeySym.q, tcod.event.KeySym.ESCAPE):
+        if event.sym in (tcod.event.KeySym.Q, tcod.event.KeySym.ESCAPE):
             raise SystemExit()
-        elif event.sym == tcod.event.KeySym.c:
+        elif event.sym == tcod.event.KeySym.C:
             try:
                 return input_handlers.MainGameEventHandler(load_game("savegame.sav"))
             except FileNotFoundError:
@@ -118,7 +121,7 @@ class MainMenu(input_handlers.BaseEventHandler):
             except Exception as exc:
                 traceback.print_exc()  # Print to stderr.
                 return input_handlers.PopupMessage(self, f"Failed to load save:\n{exc}")
-        elif event.sym == tcod.event.KeySym.n:
+        elif event.sym == tcod.event.KeySym.N:
             return input_handlers.MainGameEventHandler(new_game())
 
         return None

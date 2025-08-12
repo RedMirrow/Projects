@@ -4,7 +4,7 @@
 import tcod
 import colour
 
-from input_handlers import EventHandler
+
 import setup_game
 
 import exceptions
@@ -20,11 +20,11 @@ def save_game(handler: input_handlers.BaseEventHandler, filename: str) -> None:
 
 
 def main() -> None:
-    # Determines the size of the playscreen and used tileset
+    # Determines the size of the playscreen
     screen_width = 100
-    screen_height = 50
+    screen_height = 60
 
-    tileset = tcod.tileset.load_tilesheet("tileMap.png",32,8,tcod.tileset.CHARMAP_TCOD)
+    tileset = tcod.tileset.load_tilesheet("Anno_16x16.png",16,16,tcod.tileset.CHARMAP_CP437)
 
     # A new event handler object is created to handle user inputs
     handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
@@ -34,7 +34,7 @@ def main() -> None:
         screen_width,
         screen_height,
         tileset=tileset,
-        title="Python Roguelike",
+        title="The Endless Crypt",
         vsync=True,
     ) as context:
         # Creating the 'terminal' for the screen

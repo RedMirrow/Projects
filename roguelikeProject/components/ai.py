@@ -205,7 +205,7 @@ class SpawnerEnemy(BaseAI):
         # Return a wait action.
         return WaitAction(self.entity).perform()
 
-# A hazard spawner enemy will spawn a new enemy (of the selected type) in a random location around it self. It can't move on it's own.
+# A hazard spawner enemy will spawn a new enemy (of the selected type) in a random location around itself. It can't move on it's own.
 class HazardSpawnerEnemy(BaseAI):
     def __init__(
             self, entity: Actor

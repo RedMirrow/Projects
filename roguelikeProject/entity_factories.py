@@ -27,7 +27,7 @@ poisonGas = Hazard(
 #                             Characters                              #
 #=====================================================================#
 player = Actor(
-    char="@",
+    char="☻",
     color=(255, 255, 255),
     name="Player",
     ai_cls=HostileEnemy,
@@ -95,8 +95,7 @@ houndTindalos = Actor(
     level=Level(xp_given=40),
 )
 skeleton = Actor(
-    # Stronger than the dog and rat,
-    # more common in deeper levels than aforementioned 2
+    # Stronger than the hound and rat,
     char="s",
     color=(255, 245, 238),
     name="Skeleton",
@@ -132,12 +131,12 @@ orc = Actor(
     level=Level(xp_given=30),
 )
 orcBerserk = Actor(
-    # Massive damage, miniscule health pool due to defense malus
+    # Massive damage, has a defense malus
     char="o",
     color=(255, 127, 63),
     name="Berserker Orc",
     ai_cls=HostileEnemy,
-    fighter=Fighter(hp=50, base_defense=-2, base_power=15),
+    fighter=Fighter(hp=50, base_defense=-6, base_power=15),
     equipment=Equipment(),
     inventory=Inventory(capacity=0),
     level=Level(xp_given=80),
@@ -167,7 +166,7 @@ armour_troll = Actor(
 # Creatures that summon/get summoned by other creatures
 slime = Actor(
     # An enemy to be spawned by mama_slime opponent
-    char="m",
+    char="•",
     color=(255, 80, 80),
     name="Slime ",
     ai_cls=HostileEnemy,
@@ -180,7 +179,7 @@ slime = Actor(
 
 mama_slime = Actor(
     # An enemy that avoids conflict and spawns basic slimes
-    char="M",
+    char="○",
     color=(255, 80, 80),
     name="Mama Slime",
     ai_cls=SpawnerEnemy,
@@ -194,10 +193,10 @@ mama_slime.ai.setup(slime, 2)
 
 
 slime_bile = Actor(
-    # An enemy to be spawned by mama_slime opponent
-    char="m",
+    # An enemy to be spawned by mama_bile opponent
+    char="•",
     color=(20, 255, 80),
-    name="Slime ",
+    name="Bile Slime",
     ai_cls=HostileEnemy,
     fighter=Fighter(hp=15, base_defense=2,  base_power=4),
     inventory=Inventory(capacity=0),
@@ -208,7 +207,7 @@ slime_bile = Actor(
 
 mama_bile = Actor(
     # An enemy that avoids conflict and spawns basic slimes
-    char="M",
+    char="○",
     color=(20, 255, 80),
     name="Mama Bile",
     ai_cls=SpawnerEnemy,
@@ -238,16 +237,16 @@ bile_spew.ai.setup(poisonGas, 3)
 #=====================================================================#
 # Potions are to be templated into this area
 health_potion = Item(
-    char="!",
-    color=(127, 0, 255),
+    char="¡",
+    color=(100, 0, 30),
     name="Health Potion",
     consumable=consumable.HealingConsumable(amount=4),
 )
 greater_health_potion = Item(
-    char="!",
-    color=(180, 0, 255),
+    char="¡",
+    color=(250, 0, 60),
     name="Great Health Potion",
-    consumable=consumable.HealingConsumable(amount=12),
+    consumable=consumable.HealingConsumable(amount=16),
 )
 
 #=====================================================================#
@@ -255,25 +254,25 @@ greater_health_potion = Item(
 #=====================================================================#
 # Scrolls/spells are to be templated into this area
 lightning_scroll = Item( # Longer ranged spell with notable damage
-    char="~",
+    char="=",
     color=(255, 255, 0),
     name="Lightning Scroll",
     consumable=consumable.LightningDamageConsumable(damage=20, maximum_range=5),
 )
 smite_scroll = Item( # Close ranged spell with massive damage
-    char="~",
+    char="=",
     color=(255, 215, 0),
     name="Smite Scroll",
     consumable=consumable.LightningDamageConsumable(damage=60, maximum_range=2),
 )
 confusion_scroll = Item( # Scrambles movement of a target
-    char="~",
+    char="=",
     color=(207, 63, 255),
     name="Confusion Scroll",
     consumable=consumable.ConfusionConsumable(number_of_turns=8),
 )
 weaken_scroll = Item( # Lowers target's attack by 1 permamently
-    char="~",
+    char="=",
     color=(255, 0, 255),
     name="Weaken Scroll",
     consumable=consumable.WeakenConsumable(number_of_turns=1),
@@ -285,13 +284,13 @@ strength_scroll = Item( # Increases target's attack by 1 permamently
     consumable=consumable.StrenghtenConsumable(number_of_turns=1),
 )
 fireball_scroll = Item( # Area of effect damage spell
-    char="~",
+    char="=",
     color=(200, 0, 0),
     name="Fireball Scroll",
     consumable=consumable.FireballDamageConsumable(damage=15, radius=3),
 )
 fireblast_scroll = Item( # Large area of effect damage spell, likely to hit the caster
-    char="~",
+    char="=",
     color=(255, 0, 0),
     name="Fireblast Scroll",
     consumable=consumable.FireballDamageConsumable(damage=30, radius=4),
@@ -355,21 +354,21 @@ strong_chain_mail = Item(
     name="Chain Mail of Strength", equippable=equippable.StrongChainMail())
 
 #==============================HELMETS===============================#
-# Symbols: ^
+# Symbols: ♫
 leather_cap = Item(
-    char="^", color=(171, 88, 46),
+    char="♫", color=(171, 88, 46),
     name="Leather Cap", equippable=equippable.LeatherCap())
 
 agileCap = Item(
-    char="^", color=(227, 118, 64),
+    char="♫", color=(227, 118, 64),
     name="Agility Cap", equippable=equippable.AgileCap())
 
 featherCap = Item(
-    char="^", color=(227, 118, 64),
+    char="♫", color=(227, 118, 64),
     name="Feather Cap", equippable=equippable.FeatherCap())
 
 chainCoif = Item(
-    char="^", color=(128, 128, 128),
+    char="♫", color=(128, 128, 128),
     name="Chain Coif", equippable=equippable.ChainCoif())
 
 knightHelm = Item(
@@ -377,25 +376,25 @@ knightHelm = Item(
     name="Knight Helm", equippable=equippable.FullPlateHelmet())
 
 #===============================RINGS================================#
-# Symbols: c
+# Symbols: °
 
 strengthRing = Item(
-    char="c", color=(255, 151, 0),
+    char="°", color=(255, 151, 0),
     name="Ring of Strength", equippable=equippable.StrengthRing())
 hardRing = Item(
-    char="c", color=(52, 192, 235),
+    char="°", color=(52, 192, 235),
     name="Hardened Ring", equippable=equippable.HardenedRing())
 powerRing = Item(
-    char="c", color=(200, 50, 46),
+    char="°", color=(200, 50, 46),
     name="Ring of Great Strength", equippable=equippable.PowerRing())
 shieldRing = Item(
-    char="c", color=(52, 156, 235),
+    char="°", color=(52, 156, 235),
     name="Ring of Shields", equippable=equippable.ShieldingRing())
 recklessRing = Item(
-    char="c", color=(255, 23, 0),
+    char="°", color=(255, 23, 0),
     name="Ring of Reckless Strength", equippable=equippable.RecklessRing())
 turtleRing = Item(
-    char="c", color=(52, 92, 235),
+    char="°", color=(52, 92, 235),
     name="Ring of the Turtle", equippable=equippable.TurtleRing())
 
 #==============================AMULETS===============================#
