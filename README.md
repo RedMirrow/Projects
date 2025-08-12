@@ -9,6 +9,8 @@ Meteorites - A Java based asteroids game, controlled with the arrowkeys and spac
 
 Python Roguelike (name to be changed) - A Python dungeon crawler roguelike game written with the use of tcod library
 
+Space Project - Unity3D spaceflight arena game
+
 
 
 
